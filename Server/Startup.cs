@@ -2,16 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Server.Auth;
 using Server.Hubs;
 
 namespace Server
@@ -29,76 +25,15 @@ namespace Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOptions();
+            var redisConnectionString = configuration.GetValue("Redis", "127.0.0.1:6379");
 
-            services.Configure<FakeUsers>(configuration.GetSection("FakeUsers"));
-
-            services.AddControllers();
-
-            services.AddSignalR();
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("MyCorsPolicy", builder =>
+            services.AddSignalR()
+                .AddStackExchangeRedis(redisConnectionString, options =>
                 {
-                    builder
-                        .SetIsOriginAllowed(origin => true)
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
-            });
-
-            var paramss = new TokenValidationParameters();
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = AuthOptions.Issuer,
-                        RequireAudience = true,
-                        ValidateAudience = true,
-                        ValidAudience = AuthOptions.Audience,
-                        RequireExpirationTime = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        RequireSignedTokens = true,
-                        IssuerSigningKey = AuthOptions.PublicKey
-                    };
-
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            var accessToken = context.Request.Query["token"];
-
-                            if (!string.IsNullOrWhiteSpace(accessToken) &&
-                                context.Request.Path.StartsWithSegments("/messages"))
-                            {
-                                context.Token = accessToken;
-                            }
-
-                            return Task.CompletedTask;
-                        }
-                    };
+                    options.Configuration.ChannelPrefix = "test";
                 });
 
-            services.AddAuthorization(options =>
-            {
-                options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                    .RequireAuthenticatedUser()
-                    .Build();
-
-                options.AddPolicy("MyPolicy", policy =>
-                {
-                    policy.Requirements.Add(new MyAuthPolicy());
-                });
-            });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -111,14 +46,17 @@ namespace Server
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseCors("MyCorsPolicy");
+            app.UseCors(policy =>
+            {
+                policy
+                    .SetIsOriginAllowed(origin => true)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
                 endpoints.MapHub<MessageHub>("/messages");
             });
         }

@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
-using System.Net.Http;
+using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net.Mime;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace DesktopClient
 {
     public partial class MainForm : Form
     {
         private HubConnection hubConnection;
-        private string token = string.Empty;
 
         public MainForm()
         {
@@ -23,8 +22,13 @@ namespace DesktopClient
 
         private void InitConnection()
         {
+            var parseResult = Int32.TryParse(portTextbox.Text, out var port);
+
+            if (!parseResult)
+                port = 5000;
+
             hubConnection = new HubConnectionBuilder()
-                .WithUrl($"http://localhost:57785/messages?token={token}")
+                .WithUrl($"http://localhost:{port}/messages")
                 .WithAutomaticReconnect()
                 .Build();
 
@@ -95,7 +99,7 @@ namespace DesktopClient
 
                 try
                 {
-                    await hubConnection.InvokeAsync("SendToOthers", message);
+                    await hubConnection.SendAsync("SendToOthers", message);
                     AppendTextToTextBox("Me", message.Text, Color.Green);
                 }
                 catch (Exception ex)
@@ -118,49 +122,38 @@ namespace DesktopClient
             chatTextBox.SelectionColor = chatTextBox.ForeColor;
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private async void setNameButton_Click(object sender, EventArgs e)
         {
-            var token = await GetToken();
-
-            if (!string.IsNullOrEmpty(token))
+            if (hubConnection.State == HubConnectionState.Connected)
             {
-                this.token = token;
-                InitConnection();
-
-                var tokenParts = token.Split('.');
-                var decodedToken = new StringBuilder();
-                for (int i = 0; i < 2; i++)
+                try
                 {
-                    var tokenBytes = WebEncoders.Base64UrlDecode(tokenParts[i]);
-                    var decodedPart = Encoding.UTF8.GetString(tokenBytes);
-                    decodedToken.AppendLine(decodedPart.PrettifyJsonString());
+                    await hubConnection.SendAsync("SetMyName", nameTextBox.Text);
                 }
-                decodedToken.AppendLine(tokenParts[2]);
-
-                MessageBox.Show(decodedToken.ToString());
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
-        private async Task<string> GetToken()
+        private async void button1_Click(object sender, EventArgs e)
         {
-            using var httpClient = new HttpClient();
-
-            var authModel = new { Login = nameTextBox.Text, Password = passwordTextBox.Text };
-
-            var json = JsonSerializer.Serialize(authModel);
-
-            var content = new StringContent(json, Encoding.UTF8, MediaTypeNames.Application.Json);
-
-            var response = await httpClient.PostAsync("http://localhost:57785/api/auth/token", content);
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (hubConnection.State == HubConnectionState.Connected)
             {
-                return await response.Content.ReadAsStringAsync();
-            }
-            else
-            {
-                MessageBox.Show(response.StatusCode.ToString());
-                return string.Empty;
+                try
+                {
+                    var name = await hubConnection.InvokeAsync<string>("GetMyName");
+
+                    if (string.IsNullOrWhiteSpace(name))
+                        nameTextBox.Text = "Anonymous";
+                    else
+                        nameTextBox.Text = name;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }
