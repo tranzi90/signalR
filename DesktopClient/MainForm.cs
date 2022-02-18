@@ -1,87 +1,53 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.WebSockets;
+using MyWebSocketProtocol.Client;
 
 namespace DesktopClient
 {
     public partial class MainForm : Form
     {
-        private HubConnection hubConnection;
+        private readonly MyWebSocketClient myConnection;
 
         public MainForm()
         {
             InitializeComponent();
-        }
 
-        private void InitConnection()
-        {
-            var parseResult = Int32.TryParse(portTextbox.Text, out var port);
+            myConnection = new MyWebSocketClient();
 
-            if (!parseResult)
-                port = 5000;
-
-            hubConnection = new HubConnectionBuilder()
-                .WithUrl($"http://localhost:{port}/messages")
-                .WithAutomaticReconnect()
-                .Build();
-
-            hubConnection.On<NewMessage>("Send", message =>
+            myConnection.On<Message>("Send", message =>
             {
-                AppendTextToTextBox(message.Sender, message.Text, Color.Black);
+                this.Invoke((Action)(() =>
+                {
+                    AppendTextToTextBox("Anonymous", message.Text, Color.Black);
+                }));
             });
-
-            hubConnection.Closed += error =>
-            {
-                MessageBox.Show($"Connection closed. {error?.Message}");
-                return Task.CompletedTask;
-            };
-
-            hubConnection.Reconnected += id =>
-            {
-                MessageBox.Show($"Connection reconnected with id: {id}");
-                return Task.CompletedTask;
-            };
-
-            hubConnection.Reconnecting += error =>
-            {
-                MessageBox.Show($"Connection reconnecting. {error?.Message}");
-                return Task.CompletedTask;
-            };
         }
 
         private async void connectButton_Click(object sender, EventArgs e)
         {
-            if (hubConnection == null)
-                InitConnection();
-
-            if (hubConnection.State == HubConnectionState.Disconnected)
+            if (myConnection.State == WebSocketState.None)
             {
                 try
                 {
-                    await hubConnection.StartAsync();
+                    await myConnection.ConnectAsync("ws://localhost:57785/messages");
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
 
-                if (hubConnection.State == HubConnectionState.Connected)
+                if (myConnection.State == WebSocketState.Open)
                 {
                     connectButton.Text = "Disconnect";
                     stateLabelValue.ForeColor = Color.Green;
                     stateLabelValue.Text = "Connected";
                 }
             }
-            else if (hubConnection.State == HubConnectionState.Connected)
+            else if (myConnection.State == WebSocketState.Open)
             {
-                await hubConnection.StopAsync();
+                await myConnection.StopAsync();
                 connectButton.Text = "Connect";
                 stateLabelValue.ForeColor = Color.Red;
                 stateLabelValue.Text = "Disconnected";
@@ -90,7 +56,7 @@ namespace DesktopClient
 
         private async void sendButton_Click(object sender, EventArgs e)
         {
-            if (hubConnection.State == HubConnectionState.Connected)
+            if (myConnection.State == WebSocketState.Open)
             {
                 var message = new Message
                 {
@@ -99,7 +65,7 @@ namespace DesktopClient
 
                 try
                 {
-                    await hubConnection.SendAsync("SendToOthers", message);
+                    await myConnection.SendAsync("SendToOthers", message);
                     AppendTextToTextBox("Me", message.Text, Color.Green);
                 }
                 catch (Exception ex)
@@ -120,41 +86,6 @@ namespace DesktopClient
             chatTextBox.SelectionColor = color;
             chatTextBox.AppendText(string.Format("Author: {0}{2}Text: {1}{2}{2}", sender, text, Environment.NewLine));
             chatTextBox.SelectionColor = chatTextBox.ForeColor;
-        }
-
-        private async void setNameButton_Click(object sender, EventArgs e)
-        {
-            if (hubConnection.State == HubConnectionState.Connected)
-            {
-                try
-                {
-                    await hubConnection.SendAsync("SetMyName", nameTextBox.Text);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
-
-        private async void button1_Click(object sender, EventArgs e)
-        {
-            if (hubConnection.State == HubConnectionState.Connected)
-            {
-                try
-                {
-                    var name = await hubConnection.InvokeAsync<string>("GetMyName");
-
-                    if (string.IsNullOrWhiteSpace(name))
-                        nameTextBox.Text = "Anonymous";
-                    else
-                        nameTextBox.Text = name;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
         }
     }
 }

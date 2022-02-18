@@ -25,7 +25,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "/Users/denis_levchenko/Downloads/aspnetcore-signalr-materials/УаЃ™_05_Б•ІЃѓ†б≠Ѓбвм_†гв•≠в®д®™†ж®п_®_†ҐвЃа®І†ж®п_Ґ_SignalR/005_Samples/Б•ІЃѓ†б≠Ѓбвм, †гв•≠в®д®™†ж®п ® †ҐвЃа®І†ж®п Ґ SignalR/MyWebSocketProtocol.Client/MyWebSocketProtocol.Client.csproj": {
+                "projectPath": "/Users/denis_levchenko/Downloads/aspnetcore-signalr-materials/УаЃ™_05_Б•ІЃѓ†б≠Ѓбвм_†гв•≠в®д®™†ж®п_®_†ҐвЃа®І†ж®п_Ґ_SignalR/005_Samples/Б•ІЃѓ†б≠Ѓбвм, †гв•≠в®д®™†ж®п ® †ҐвЃа®І†ж®п Ґ SignalR/MyWebSocketProtocol.Client/MyWebSocketProtocol.Client.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -37,12 +41,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "dependencies": {
-            "Microsoft.AspNetCore.SignalR.Client": {
-              "target": "Package",
-              "version": "[3.1.3, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",

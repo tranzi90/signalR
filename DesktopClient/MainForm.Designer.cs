@@ -35,12 +35,6 @@
             this.messageTextBox = new System.Windows.Forms.TextBox();
             this.sendButton = new System.Windows.Forms.Button();
             this.chatTextBox = new System.Windows.Forms.RichTextBox();
-            this.nameTextBox = new System.Windows.Forms.TextBox();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.setNameButton = new System.Windows.Forms.Button();
-            this.getNameButton = new System.Windows.Forms.Button();
-            this.portTextbox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // connectButton
@@ -75,7 +69,7 @@
             // messageTextLabel
             // 
             this.messageTextLabel.AutoSize = true;
-            this.messageTextLabel.Location = new System.Drawing.Point(12, 102);
+            this.messageTextLabel.Location = new System.Drawing.Point(12, 44);
             this.messageTextLabel.Name = "messageTextLabel";
             this.messageTextLabel.Size = new System.Drawing.Size(28, 15);
             this.messageTextLabel.TabIndex = 2;
@@ -83,7 +77,7 @@
             // 
             // messageTextBox
             // 
-            this.messageTextBox.Location = new System.Drawing.Point(56, 99);
+            this.messageTextBox.Location = new System.Drawing.Point(56, 41);
             this.messageTextBox.Multiline = true;
             this.messageTextBox.Name = "messageTextBox";
             this.messageTextBox.Size = new System.Drawing.Size(170, 77);
@@ -91,7 +85,7 @@
             // 
             // sendButton
             // 
-            this.sendButton.Location = new System.Drawing.Point(151, 182);
+            this.sendButton.Location = new System.Drawing.Point(151, 124);
             this.sendButton.Name = "sendButton";
             this.sendButton.Size = new System.Drawing.Size(75, 23);
             this.sendButton.TabIndex = 0;
@@ -111,72 +105,11 @@
             this.chatTextBox.TabIndex = 4;
             this.chatTextBox.Text = "";
             // 
-            // nameTextBox
-            // 
-            this.nameTextBox.Location = new System.Drawing.Point(56, 41);
-            this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(170, 23);
-            this.nameTextBox.TabIndex = 3;
-            this.nameTextBox.Text = "Anonymous";
-            // 
-            // nameLabel
-            // 
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(12, 45);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(39, 15);
-            this.nameLabel.TabIndex = 2;
-            this.nameLabel.Text = "Name";
-            // 
-            // setNameButton
-            // 
-            this.setNameButton.Location = new System.Drawing.Point(151, 70);
-            this.setNameButton.Name = "setNameButton";
-            this.setNameButton.Size = new System.Drawing.Size(75, 23);
-            this.setNameButton.TabIndex = 0;
-            this.setNameButton.Text = "Set";
-            this.setNameButton.UseVisualStyleBackColor = true;
-            this.setNameButton.Click += new System.EventHandler(this.setNameButton_Click);
-            // 
-            // getNameButton
-            // 
-            this.getNameButton.Location = new System.Drawing.Point(70, 70);
-            this.getNameButton.Name = "getNameButton";
-            this.getNameButton.Size = new System.Drawing.Size(75, 23);
-            this.getNameButton.TabIndex = 5;
-            this.getNameButton.Text = "Get";
-            this.getNameButton.UseVisualStyleBackColor = true;
-            this.getNameButton.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // portTextbox
-            // 
-            this.portTextbox.Location = new System.Drawing.Point(56, 211);
-            this.portTextbox.Name = "portTextbox";
-            this.portTextbox.Size = new System.Drawing.Size(170, 23);
-            this.portTextbox.TabIndex = 6;
-            this.portTextbox.Text = "5000";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 207);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 30);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Server\r\nport";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(809, 440);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.portTextbox);
-            this.Controls.Add(this.getNameButton);
-            this.Controls.Add(this.setNameButton);
-            this.Controls.Add(this.nameLabel);
-            this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.chatTextBox);
             this.Controls.Add(this.sendButton);
             this.Controls.Add(this.messageTextBox);
@@ -200,12 +133,6 @@
         private System.Windows.Forms.TextBox messageTextBox;
         private System.Windows.Forms.Button sendButton;
         private System.Windows.Forms.RichTextBox chatTextBox;
-        private System.Windows.Forms.TextBox nameTextBox;
-        private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.Button setNameButton;
-        private System.Windows.Forms.Button getNameButton;
-        private System.Windows.Forms.TextBox portTextbox;
-        private System.Windows.Forms.Label label1;
     }
 }
 

@@ -1,28 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "1LIFm8yigrtU9jpnL8xFgtRko7PxtVK3ZnlywyZ4X10hs2idkofxD0Wm2fgJEUr49FYpxvz5QkGSx4azO0Tzbg==",
-  "success": true,
+  "dgSpecHash": "3S4N1KFsV0SjEg7Mj/VwM2V/+u/KlWSWbrxCyn1xjdpZIiUEMxLuelbFXGXx9tMr5mE/Sxtk61rf6qQtavB0Dw==",
+  "success": false,
   "projectFilePath": "/Users/denis_levchenko/Downloads/aspnetcore-signalr-materials/УаЃ™_05_Б•ІЃѓ†б≠Ѓбвм_†гв•≠в®д®™†ж®п_®_†ҐвЃа®І†ж®п_Ґ_SignalR/005_Samples/Б•ІЃѓ†б≠Ѓбвм, †гв•≠в®д®™†ж®п ® †ҐвЃа®І†ж®п Ґ SignalR/DesktopClient/DesktopClient.csproj",
-  "expectedPackageFiles": [
-    "/Users/denis_levchenko/.nuget/packages/microsoft.aspnetcore.connections.abstractions/3.1.3/microsoft.aspnetcore.connections.abstractions.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.aspnetcore.http.connections.client/3.1.3/microsoft.aspnetcore.http.connections.client.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.aspnetcore.http.connections.common/3.1.3/microsoft.aspnetcore.http.connections.common.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.aspnetcore.http.features/3.1.3/microsoft.aspnetcore.http.features.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.aspnetcore.signalr.client/3.1.3/microsoft.aspnetcore.signalr.client.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.aspnetcore.signalr.client.core/3.1.3/microsoft.aspnetcore.signalr.client.core.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.aspnetcore.signalr.common/3.1.3/microsoft.aspnetcore.signalr.common.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.aspnetcore.signalr.protocols.json/3.1.3/microsoft.aspnetcore.signalr.protocols.json.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.extensions.configuration/3.1.3/microsoft.extensions.configuration.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.extensions.configuration.abstractions/3.1.3/microsoft.extensions.configuration.abstractions.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.extensions.configuration.binder/3.1.3/microsoft.extensions.configuration.binder.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.extensions.dependencyinjection/3.1.3/microsoft.extensions.dependencyinjection.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/3.1.3/microsoft.extensions.dependencyinjection.abstractions.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.extensions.logging/3.1.3/microsoft.extensions.logging.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.extensions.logging.abstractions/3.1.3/microsoft.extensions.logging.abstractions.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.extensions.options/3.1.3/microsoft.extensions.options.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/microsoft.extensions.primitives/3.1.3/microsoft.extensions.primitives.3.1.3.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/system.io.pipelines/4.7.1/system.io.pipelines.4.7.1.nupkg.sha512",
-    "/Users/denis_levchenko/.nuget/packages/system.threading.channels/4.7.0/system.threading.channels.4.7.0.nupkg.sha512"
-  ],
-  "logs": []
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "filePath": "/Users/denis_levchenko/Downloads/aspnetcore-signalr-materials/УаЃ™_05_Б•ІЃѓ†б≠Ѓбвм_†гв•≠в®д®™†ж®п_®_†ҐвЃа®І†ж®п_Ґ_SignalR/005_Samples/Б•ІЃѓ†б≠Ѓбвм, †гв•≠в®д®™†ж®п ® †ҐвЃа®І†ж®п Ґ SignalR/DesktopClient/DesktopClient.csproj",
+      "message": "Unable to find project information for '/Users/denis_levchenko/Downloads/aspnetcore-signalr-materials/УаЃ™_05_Б•ІЃѓ†б≠Ѓбвм_†гв•≠в®д®™†ж®п_®_†ҐвЃа®І†ж®п_Ґ_SignalR/005_Samples/Б•ІЃѓ†б≠Ѓбвм, †гв•≠в®д®™†ж®п ® †ҐвЃа®І†ж®п Ґ SignalR/MyWebSocketProtocol.Client/MyWebSocketProtocol.Client.csproj'. If you are using Visual Studio, this may be because the project is unloaded or not part of the current solution so run a restore from the command-line. Otherwise, the project file may be invalid or missing targets required for restore.",
+      "libraryId": "/Users/denis_levchenko/Downloads/aspnetcore-signalr-materials/УаЃ™_05_Б•ІЃѓ†б≠Ѓбвм_†гв•≠в®д®™†ж®п_®_†ҐвЃа®І†ж®п_Ґ_SignalR/005_Samples/Б•ІЃѓ†б≠Ѓбвм, †гв•≠в®д®™†ж®п ® †ҐвЃа®І†ж®п Ґ SignalR/MyWebSocketProtocol.Client/MyWebSocketProtocol.Client.csproj",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }
